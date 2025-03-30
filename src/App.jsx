@@ -31,15 +31,12 @@ export default function App() {
         >
           Full-Stack Developer | AI Enthusiast | Problem Solver
         </motion.p>
-        <motion.p
-          className="text-center text-neutral-400 mb-10 text-lg leading-relaxed max-w-3xl mx-auto"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-        >
-          I build clean, scalable web applications using modern tools like React, Spring Boot, and Tailwind CSS —
-          blending strong fundamentals with AI technologies like ChatGPT and Stable Diffusion to bring creative ideas to life.
-        </motion.p>
+        <ul className="text-left text-neutral-400 mb-10 text-lg leading-relaxed max-w-3xl mx-auto list-disc list-inside space-y-2">
+        <li>Build scalable, clean full-stack applications</li>
+        <li>Skilled in React, Spring Boot, Tailwind CSS</li>
+        <li>Apply AI tools like ChatGPT & Stable Diffusion</li>
+        <li>Transform complex ideas into working products</li>
+</ul>
 
         <hr className="border-t border-neutral-700 mb-8" />
 
