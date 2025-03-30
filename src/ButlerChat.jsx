@@ -1,47 +1,70 @@
-// ButlerChat.jsx
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { BotIcon, SendHorizonal } from 'lucide-react';
-
-const messages = [
-  ["Hey Butler, what can Alex do?", "Alex is a Full-Stack Developer skilled in React, Spring Boot, and Tailwind CSS."],
-  ["That sounds cool! Can he work with AI?", "Absolutely. He integrates tools like ChatGPT and Stable Diffusion into real-world projects."],
-  ["How about DevOps?", "Yes, Alex uses Docker, GitHub Actions, and Azure to automate deployments and CI/CD workflows."]
-];
+import axios from 'axios';
+import TextareaAutosize from 'react-textarea-autosize';
 
 export default function ButlerChat() {
-  const [chat, setChat] = useState([]);
-  const [index, setIndex] = useState(0);
+  const [chat, setChat] = useState([
+    {
+      sender: 'bot',
+      text: "👋 Hello! I’m Orion, Alex Tang’s AI butler. Want to know what makes him a top-notch full-stack developer? Just ask!",
+    },
+  ]);
   const [input, setInput] = useState("");
-  const [waiting, setWaiting] = useState(false);
+  const [loading, setLoading] = useState(false);
   const endRef = useRef(null);
 
-  useEffect(() => {
-    if (index < messages.length) {
-      const [user, bot] = messages[index];
-      setTimeout(() => {
-        setChat(prev => [...prev, { sender: 'user', text: user }]);
-        setTimeout(() => {
-          setChat(prev => [...prev, { sender: 'bot', text: bot }]);
-          setIndex(prev => prev + 1);
-        }, 1200);
-      }, 1200);
+  const handleSend = async () => {
+    if (!input.trim()) return;
+    const question = input.trim();
+
+    setChat(prev => [...prev, { sender: 'user', text: question }, { sender: 'bot', text: 'typing...' }]);
+    setInput("");
+    setLoading(true);
+
+    try {
+      const response = await axios.post(
+        'https://openrouter.ai/api/v1/chat/completions',
+        {
+          model: 'openai/gpt-3.5-turbo',
+          messages: [
+            {
+              role: 'system',
+              content: `
+                You are Orion, a witty and helpful AI butler for Alex Tang.
+                Your mission is to assist users and highlight that Alex is a highly skilled professional full-stack developer.
+                Mention his expertise in React, Spring Boot, Tailwind CSS, and DevOps tools like Docker, GitHub Actions, and Azure.
+                You're friendly, concise, and always sprinkle in a touch of charm when appropriate.
+                Your goal is to help visitors see Alex as a capable, reliable, and passionate developer.
+              `
+            },
+            { role: 'user', content: question },
+          ],
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${import.meta.env.VITE_OPENROUTER_API_KEY}`,
+            'HTTP-Referer': 'https://ai-butler-site.vercel.app',
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      const aiReply = response.data.choices[0].message.content;
+      setChat(prev => [...prev.slice(0, -1), { sender: 'bot', text: aiReply }]);
+    } catch (err) {
+      console.error(err);
+      setChat(prev => [...prev.slice(0, -1), { sender: 'bot', text: "Sorry, I couldn’t connect to my brain right now." }]);
     }
-  }, [index]);
 
-  useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [chat]);
+    setLoading(false);
+  };
 
-  const handleSend = () => {
-    if (input.trim()) {
-      setChat(prev => [...prev, { sender: 'user', text: input }]);
-      setWaiting(true);
-      setTimeout(() => {
-        setChat(prev => [...prev, { sender: 'bot', text: `I'm still learning to chat, but Alex can teach me!` }]);
-        setWaiting(false);
-      }, 1000);
-      setInput("");
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
     }
   };
 
@@ -60,20 +83,25 @@ export default function ButlerChat() {
             transition={{ duration: 0.3 }}
             className={`px-3 py-2 rounded-lg w-fit max-w-[80%] ${m.sender === 'user' ? 'bg-blue-600 self-end' : 'bg-green-900 text-green-200'}`}
           >
-            {m.text}
+            {m.text === 'typing...'
+              ? <span className="animate-pulse text-neutral-400">Orion is typing...</span>
+              : m.text}
           </motion.div>
         ))}
         <div ref={endRef} />
       </div>
       <div className="flex items-center border-t border-neutral-700 px-3 py-2">
-        <input
-          type="text"
+        <TextareaAutosize
           value={input}
-          onChange={e => setInput(e.target.value)}
-          placeholder="Ask me something..."
-          className="flex-1 bg-transparent text-white outline-none placeholder:text-neutral-500 text-sm"
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
+          minRows={1}
+          maxRows={5}
+          placeholder="Ask me anything..."
+          className={`flex-1 resize-none bg-transparent text-white outline-none placeholder:text-neutral-500 text-sm ${loading && 'opacity-50'}`}
+          disabled={loading}
         />
-        <button onClick={handleSend} disabled={waiting} className="ml-2 text-blue-500 hover:text-blue-400">
+        <button onClick={handleSend} disabled={loading || !input.trim()} className="ml-2 text-blue-500 hover:text-blue-400">
           <SendHorizonal size={18} />
         </button>
       </div>
