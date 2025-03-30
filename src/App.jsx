@@ -1,19 +1,31 @@
 import React from "react";
 import { motion } from "framer-motion";
+import Logo from './Logo';
+import ButlerChat from './ButlerChat';
 
 export default function App() {
   return (
+    
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
-      className="min-h-screen bg-gradient-to-tr from-neutral-900 to-neutral-800 text-neutral-100 py-12 px-4"
+      className="relative w-full min-h-screen text-neutral-100 py-12 px-4 overflow-hidden bg-transparent"
     >
+      
+      
+
+
+      <header className="w-full max-w-7xl mx-auto px-4 mb-6 flex items-center justify-between relative z-10">
+        <Logo />
+      </header>
+      <ButlerChat />
+
       <motion.div
         initial={{ y: 30, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.3 }}
-        className="max-w-5xl mx-auto bg-neutral-800/90 shadow-xl rounded-3xl p-10 border border-neutral-700 backdrop-blur"
+        className="relative z-10 max-w-5xl mx-auto bg-neutral-800/90 shadow-xl rounded-3xl p-10 border border-neutral-700 backdrop-blur"
       >
         <motion.h1
           className="text-5xl font-extrabold text-center text-white mb-4 tracking-tight"
@@ -32,11 +44,11 @@ export default function App() {
           Full-Stack Developer | AI Enthusiast | Problem Solver
         </motion.p>
         <ul className="text-left text-neutral-400 mb-10 text-lg leading-relaxed max-w-3xl mx-auto list-disc list-inside space-y-2">
-        <li>Build scalable, clean full-stack applications</li>
-        <li>Skilled in React, Spring Boot, Tailwind CSS</li>
-        <li>Apply AI tools like ChatGPT & Stable Diffusion</li>
-        <li>Transform complex ideas into working products</li>
-</ul>
+          <li>Build scalable, clean full-stack applications</li>
+          <li>Skilled in React, Spring Boot, Tailwind CSS</li>
+          <li>Apply AI tools like ChatGPT & Stable Diffusion</li>
+          <li>Transform complex ideas into working products</li>
+        </ul>
 
         <hr className="border-t border-neutral-700 mb-8" />
 
@@ -51,8 +63,8 @@ export default function App() {
             <Skill title="Tools" list="VS Code, Postman, Power BI, SharePoint, Figma" />
           </div>
         </section>
-
-        <section className="mb-16">
+        {/* hide for now, waiting for more project */}
+        {/* <section className="mb-16">
           <h2 className="text-2xl font-bold text-neutral-100 mb-6 text-center">💼 Projects</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <ProjectCard
@@ -63,7 +75,7 @@ export default function App() {
               repoLink="https://github.com/PacificZenA/ai-butler-site"
             />
           </div>
-        </section>
+        </section> */}
 
         <div className="flex flex-wrap justify-center gap-4">
           <LinkButton href="/resume.pdf" text="📄 View My Resume" filled />
@@ -72,6 +84,7 @@ export default function App() {
         </div>
       </motion.div>
     </motion.div>
+    
   );
 }
 
@@ -131,6 +144,7 @@ function ProjectCard({ title, tech, description, liveLink, repoLink }) {
           💻 GitHub Repo
         </a>
       </div>
+      
     </motion.div>
   );
 }
