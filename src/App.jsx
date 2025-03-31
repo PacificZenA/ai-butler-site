@@ -78,7 +78,7 @@ export default function App() {
         </section> */}
 
         <div className="flex flex-wrap justify-center gap-4">
-          <LinkButton href="/resume.pdf" text="📄 View My Resume" filled />
+          {/* <LinkButton href="/resume.pdf" text="📄 View My Resume" filled /> Resume maybe later */}
           <LinkButton href="https://www.linkedin.com/in/alex-tang-at" text="🔗 LinkedIn" />
           <LinkButton href="https://github.com/PacificZenA" text="💻 GitHub" />
         </div>
