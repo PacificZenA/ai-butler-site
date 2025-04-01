@@ -46,7 +46,7 @@ export default function App() {
         <ul className="text-left text-neutral-400 mb-10 text-lg leading-relaxed max-w-3xl mx-auto list-disc list-inside space-y-2">
           <li>Build scalable, clean full-stack applications</li>
           <li>Skilled in React, Spring Boot, Tailwind CSS</li>
-          <li>Apply AI tools like ChatGPT & Stable Diffusion</li>
+          <li>Apply AI tools like ChatGPT API</li>
           <li>Transform complex ideas into working products</li>
         </ul>
 

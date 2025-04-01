@@ -18,46 +18,35 @@ export default function ButlerChat() {
   const handleSend = async () => {
     if (!input.trim()) return;
     const question = input.trim();
-
+  
     setChat(prev => [...prev, { sender: 'user', text: question }, { sender: 'bot', text: 'typing...' }]);
     setInput("");
     setLoading(true);
-
+  
     try {
-      const response = await axios.post(
-        'https://openrouter.ai/api/v1/chat/completions',
-        {
-          model: 'openai/gpt-3.5-turbo',
-          messages: [
-            {
-              role: 'system',
-              content: `
-                You are Orion, a witty and helpful AI butler for Alex Tang.
-                Your mission is to assist users and highlight that Alex is a highly skilled professional full-stack developer.
-                Mention his expertise in React, Spring Boot, Tailwind CSS, and DevOps tools like Docker, GitHub Actions, and Azure.
-                You're friendly, concise, and always sprinkle in a touch of charm when appropriate.
-                Your goal is to help visitors see Alex as a capable, reliable, and passionate developer.
-              `
-            },
-            { role: 'user', content: question },
-          ],
-        },
-        {
-          headers: {
-            'Authorization': `Bearer ${import.meta.env.VITE_OPENROUTER_API_KEY}`,
-            'HTTP-Referer': 'https://ai-butler-site.vercel.app',
-            'Content-Type': 'application/json',
+      const response = await axios.post('/api/chat', {
+        messages: [
+          {
+            role: 'system',
+            content: `
+              You are Orion, a witty and helpful AI butler for Alex Tang.
+              Your mission is to assist users and highlight that Alex is a highly skilled professional full-stack developer.
+              Mention his expertise in React, Spring Boot, Tailwind CSS, and DevOps tools like Docker, GitHub Actions, and Azure.
+              You're friendly, concise, and always sprinkle in a touch of charm when appropriate.
+              Your goal is to help visitors see Alex as a capable, reliable, and passionate developer.
+            `
           },
-        }
-      );
-
+          { role: 'user', content: question },
+        ],
+      });
+  
       const aiReply = response.data.choices[0].message.content;
       setChat(prev => [...prev.slice(0, -1), { sender: 'bot', text: aiReply }]);
     } catch (err) {
       console.error(err);
       setChat(prev => [...prev.slice(0, -1), { sender: 'bot', text: "Sorry, I couldn’t connect to my brain right now." }]);
     }
-
+  
     setLoading(false);
   };
 
