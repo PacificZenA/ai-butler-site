@@ -5,17 +5,12 @@ import ButlerChat from './ButlerChat';
 
 export default function App() {
   return (
-    
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
       className="relative w-full min-h-screen text-neutral-100 py-12 px-4 overflow-hidden bg-transparent"
     >
-      
-      
-
-
       <header className="w-full max-w-7xl mx-auto px-4 mb-6 flex items-center justify-between relative z-10">
         <Logo />
       </header>
@@ -63,28 +58,33 @@ export default function App() {
             <Skill title="Tools" list="VS Code, Postman, Power BI, SharePoint, Figma" />
           </div>
         </section>
-        {/* hide for now, waiting for more project */}
-        {/* <section className="mb-16">
+
+        <section className="mb-16">
           <h2 className="text-2xl font-bold text-neutral-100 mb-6 text-center">💼 Projects</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <ProjectCard
               title="AI Butler Portfolio"
               tech="React, Tailwind, Vite"
-              description="This personal portfolio showcases my technical skills and career goals, with a clean dark theme and responsive design."
+              description="This personal portfolio showcases my technical skills and career goals, with the OpenAI API to power an interactive AI assistant."
               liveLink="https://ai-butler-site.vercel.app/"
               repoLink="https://github.com/PacificZenA/ai-butler-site"
             />
+            <ProjectCard
+              title="ReconKit v0.7.3"
+              tech="Python, Multithreading, Selenium"
+              description="A command-line subdomain and path scanner with fingerprinting, auto screenshot, and HTML report generation. Scanned demo.testfire.net in a real-world test."
+              liveLink="/report_demo.testfire.net_20250402_140121.html"
+              repoLink="https://github.com/PacificZenA/ReconKit"
+            />
           </div>
-        </section> */}
+        </section>
 
         <div className="flex flex-wrap justify-center gap-4">
-          {/* <LinkButton href="/resume.pdf" text="📄 View My Resume" filled /> Resume maybe later */}
           <LinkButton href="https://www.linkedin.com/in/alex-tang-at" text="🔗 LinkedIn" />
           <LinkButton href="https://github.com/PacificZenA" text="💻 GitHub" />
         </div>
       </motion.div>
     </motion.div>
-    
   );
 }
 
@@ -133,7 +133,7 @@ function ProjectCard({ title, tech, description, liveLink, repoLink }) {
           rel="noopener noreferrer"
           className="text-sm text-neutral-300 underline hover:text-white"
         >
-          🌐 Live Site
+          🌐 Live Report
         </a>
         <a
           href={repoLink}
@@ -144,7 +144,6 @@ function ProjectCard({ title, tech, description, liveLink, repoLink }) {
           💻 GitHub Repo
         </a>
       </div>
-      
     </motion.div>
   );
 }
