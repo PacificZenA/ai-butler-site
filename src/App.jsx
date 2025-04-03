@@ -62,6 +62,14 @@ export default function App() {
         <section className="mb-16">
           <h2 className="text-2xl font-bold text-neutral-100 mb-6 text-center">💼 Projects</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <ProjectCard
+              title="Motiva Mind v0.1"
+              tech="FastAPI, OpenRouter API, CSV Parsing, Pandas"
+              description="A personal wellness app that analyzes Apple Watch data (steps and sleep) and generates motivational feedback using AI. Inspired by technical requirements for a Canadian government AI developer role."
+              // liveLink="http://localhost:8000/docs"
+              repoLink="https://github.com/PacificZenA/motiva-mind"
+            />
+
             <ProjectCard
               title="AI Butler Portfolio"
               tech="React, Tailwind, Vite"
@@ -76,6 +84,7 @@ export default function App() {
               liveLink="/report_demo.testfire.net_20250402_140121.html"
               repoLink="https://github.com/PacificZenA/ReconKit"
             />
+
           </div>
         </section>
 
