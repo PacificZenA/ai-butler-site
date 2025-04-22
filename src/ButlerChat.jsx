@@ -8,7 +8,7 @@ export default function ButlerChat() {
   const [chat, setChat] = useState([
     {
       sender: 'bot',
-      text: "👋 Hello! I’m Orion, Alex Tang’s AI butler. Want to know what makes him a top-notch full-stack developer? Just ask!",
+      text: "Hi, I’m Orion, Alex Tang’s AI assistant. As Alex is currently job-seeking and unable to cover ongoing GPT-API costs, this demo is paused. However, if you’re curious about TonePilot or exploring potential collaboration, drop him a message — he’ll gladly reactivate it just for you.",
     },
   ]);
   const [input, setInput] = useState("");
