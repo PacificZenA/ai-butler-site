@@ -23,10 +23,10 @@ export default async function handler(req, res) {
       });
   
       const data = await response.json();
-      console.log('[DEBUG] API response:', data); // ✅ 看 response
+      console.log('[DEBUG] API response:', data); 
       return res.status(200).json(data);
     } catch (error) {
-      console.error('[Chat API error]', error); // ✅ 打印完整错误
+      console.error('[Chat API error]', error);
       return res.status(500).json({ error: 'Failed to fetch AI response.' });
     }
   }
